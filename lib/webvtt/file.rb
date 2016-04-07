@@ -67,7 +67,11 @@ private
         cue_opts[:cue_line] = collected_lines[1]
       end
       cue_opts[:text] = collected_lines[2..-1].join("\n")
-      cues << Cue.new(cue_opts)
+      begin
+        cues << Cue.new(cue_opts)
+      rescue
+        puts "Error with new cue #{cue_opts.inspect}"        
+      end
     end
 
     def notes?(collected_lines)
