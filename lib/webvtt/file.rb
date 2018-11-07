@@ -54,6 +54,21 @@ module Webvtt
     def remove_bom
       file.gsub!("\uFEFF", '')
     end
+    
+    
+    def to_srt
+      out = []
+      @cues.each_with_index do |l, i|
+        out << "#{i + 1}"
+        out << '%s --> %s' % [l.start, l.end]
+        out << (l.text ? l.text.gsub('|', endl) : ' ') + endl
+      end
+      out.join(endl)
+    end
+    
+    def endl
+      "\n"      
+    end
 
 private
 

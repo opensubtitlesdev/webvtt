@@ -5,7 +5,9 @@ class WebvttFileTest < Test::Unit::TestCase
   setup do
     path = File.expand_path(File.dirname(__FILE__))
     @file_path = File.join(path, 'examples', 'tolson.vtt')
+    @file_path_wtf = File.join(path, 'examples', 'parse_arabic.vtt')
     @vtt = Webvtt::File.new(@file_path)
+    @vtt_wtf = Webvtt::File.new(@file_path_wtf)
   end
 
   test "should have a File class" do
@@ -15,11 +17,18 @@ class WebvttFileTest < Test::Unit::TestCase
   test "should create a new File with file path" do
     assert Webvtt::File.new(@file_path)
   end
-
+ # test "should create a new File with file path wtf" do
+ #   assert Webvtt::File.new(@file_path_wtf)
+ # end
   test "should create a new File with a File object" do
     file = File.open(@file_path)
     assert Webvtt::File.new(file)
   end
+  
+ # test "should create a new File with a File object wtf" do
+ #   file_wtf = File.open(@file_path_wtf)
+ #   assert Webvtt::File.new(file_wtf)
+ # end
 
   test "should create a new File with a String as the contents of the WEBVTT file" do
     file = "WEBVTT FILE\n\n1\n00:00:00 --> 00:00:05\nIt was a frightening time but it also was a time of great student intrigue"
