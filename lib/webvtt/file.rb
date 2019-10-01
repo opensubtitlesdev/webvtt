@@ -4,21 +4,28 @@ module Webvtt
 
     attr_accessor :file, :cues
 
-    def initialize(input_file)
-      if input_file.is_a?(String)
-        input_file = input_file.encode('UTF-8')
-        if ::File.exist?(input_file)
-          @file = ::File.read(input_file)
+    def initialize(input_file,filemode=true)
+      if filemode
+        if input_file.is_a?(String)
+          input_file = input_file.encode('UTF-8')
+          if ::File.exist?(input_file)
+            @file = ::File.read(input_file)
+          else
+            @file = input_file
+          end
+        elsif input_file.is_a?(::File)
+          @file = input_file.read
         else
-          @file = input_file
+          raise
         end
-      elsif input_file.is_a?(::File)
-        @file = input_file.read
+        @cues = []
+        parse
       else
-        raise
+        # load string directly
+        @file=input_file
+        @cues = []
+        parse
       end
-      @cues = []
-      parse
     end
 
     def parse
